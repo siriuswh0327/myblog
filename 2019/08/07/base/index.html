@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>设计模式在JS中的应用 | sirius的小站</title>
+    <meta name="description" content="This is a blog example built by VuePress">
+    
+    
+    <link rel="preload" href="/myblog/assets/css/0.styles.cccbba04.css" as="style"><link rel="preload" href="/myblog/assets/js/app.10632338.js" as="script"><link rel="preload" href="/myblog/assets/js/4.405058a6.js" as="script"><link rel="preload" href="/myblog/assets/js/5.026990a3.js" as="script"><link rel="preload" href="/myblog/assets/js/17.e6979acc.js" as="script"><link rel="prefetch" href="/myblog/assets/js/1.72ff1fc8.js"><link rel="prefetch" href="/myblog/assets/js/10.b6e12b8d.js"><link rel="prefetch" href="/myblog/assets/js/11.0d07af16.js"><link rel="prefetch" href="/myblog/assets/js/12.d2b5af22.js"><link rel="prefetch" href="/myblog/assets/js/13.ab61fe46.js"><link rel="prefetch" href="/myblog/assets/js/14.33a8d99a.js"><link rel="prefetch" href="/myblog/assets/js/15.5d97194f.js"><link rel="prefetch" href="/myblog/assets/js/16.eda8f807.js"><link rel="prefetch" href="/myblog/assets/js/18.08b02a9b.js"><link rel="prefetch" href="/myblog/assets/js/19.1cb6a347.js"><link rel="prefetch" href="/myblog/assets/js/6.120ffd19.js"><link rel="prefetch" href="/myblog/assets/js/7.4c7fe49a.js"><link rel="prefetch" href="/myblog/assets/js/8.7c3da761.js"><link rel="prefetch" href="/myblog/assets/js/9.fbaf6afd.js"><link rel="prefetch" href="/myblog/assets/js/vuejs-paginate.d53f7e69.js">
+    <link rel="stylesheet" href="/myblog/assets/css/0.styles.cccbba04.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuperess-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/myblog/" class="nav-link home-link">sirius的小站 </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/myblog/" class="nav-link">博文</a></li><li class="nav-item"><a href="/myblog/tag/" class="nav-link">标签</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/myblog/" class="nav-link mobile-home-link">sirius的小站 </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/myblog/" class="nav-link">博文</a></li><li class="mobile-nav-item"><a href="/myblog/tag/" class="nav-link">标签</a></li></ul></div></div></div> <div class="content-wrapper"><div id="vuperess-theme-blog__post-layout"><div class="vuepress-blog-theme-content"><div class="content__default"><h1 id="vue中的组件通信方式"><a href="#vue中的组件通信方式" class="header-anchor">#</a> Vue中的组件通信方式</h1> <p>最近在看网易的公开课，有一节课有讲到设计模式在js中的应用，觉得把之前一直不太理解的这块内容讲得还挺直白的，现在就把课上的内容整理下来，当个笔记。</p> <p>老师把二十多种设计模式分成了四个大类，分别是：创建型设计模式、结构型设计模式、行为型设计模式、技巧型设计模式。</p> <h2 id="创建型设计模式"><a href="#创建型设计模式" class="header-anchor">#</a> 创建型设计模式</h2> <p>创建型设计模式包括工厂模式、建造者模式、原型模式、单例模式。主要都是在创建一个对象时候需要考虑的。</p> <h3 id="工厂模式"><a href="#工厂模式" class="header-anchor">#</a> 工厂模式</h3> <p>工厂模式主要用于批量创建对象，当需要创建的对象的一些特性相对固定的时候，工厂模式是一种非常合适的模式。</p> <div class="language-js extra-class"><pre class="language-js"><code>  <span class="token keyword">function</span> <span class="token function">ballFactor</span><span class="token punctuation">(</span><span class="token parameter">type</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> type<span class="token operator">!=</span><span class="token string">'string'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+       <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'type must be a string'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  	<span class="token comment">//第一，不要遗漏防错处理</span>
+  	<span class="token comment">//第二，定义一个方法或者一个类，你得这样写保证安全</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token keyword">instanceof</span> <span class="token class-name">ballFactor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    	<span class="token keyword">var</span> s <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">this</span><span class="token punctuation">[</span>type<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    	<span class="token keyword">return</span> s<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ballFactor</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">//定义球的类型</span>
+  ballFactor<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">basketball</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token operator">=</span><span class="token string">'basketball'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">tennis</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token operator">=</span><span class="token string">'tennis'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token comment">//新创建一个球</span>
+  <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ballFactor</span><span class="token punctuation">(</span><span class="token string">'tennis'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="建造者模式"><a href="#建造者模式" class="header-anchor">#</a> 建造者模式</h3> <p>建造者模式用于定制化的创建对象，当需要对一个对象的所有属性进行配置的时候，可以考虑建造者模式。</p> <div class="language-js extra-class"><pre class="language-js"><code>  <span class="token comment">//建造模式</span>
+    <span class="token comment">//需要关心如何组装对象</span>
+ <span class="token keyword">function</span> <span class="token function">hand</span><span class="token punctuation">(</span><span class="token parameter">size</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">function</span> <span class="token function">foot</span><span class="token punctuation">(</span><span class="token parameter">size</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">function</span> <span class="token function">face</span><span class="token punctuation">(</span><span class="token parameter">status</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">function</span> <span class="token function">person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>hand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">hand</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>foot <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">foot</span><span class="token punctuation">(</span><span class="token number">180</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>face <span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">face</span><span class="token punctuation">(</span><span class="token string">'good'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+</code></pre></div><h3 id="原型模式"><a href="#原型模式" class="header-anchor">#</a> 原型模式</h3> <p>原型模式用于创建一系列共享原型的对象，由于js天生自带原型属性，这里就不具体举例了。</p> <h3 id="单例模式"><a href="#单例模式" class="header-anchor">#</a> 单例模式</h3> <p>单例模式用于创建独一无二的对象,我们只能从这个对想象中的方法拿到里面的属性、方法，而无法通过new去实例化。</p> <div class="language-js extra-class"><pre class="language-js"><code>  <span class="token comment">//单例模式</span>
+    <span class="token comment">//保证全局只有一个对象</span>
+ <span class="token keyword">var</span> single <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token comment">//定义私有变量</span>
+  <span class="token keyword">function</span> <span class="token function">_a</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">this</span><span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> ob <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">_a</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">get</span><span class="token operator">:</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">name</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> ob<span class="token punctuation">[</span>name<span class="token punctuation">]</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="结构型设计模式"><a href="#结构型设计模式" class="header-anchor">#</a> 结构型设计模式</h2> <p>在创建完对象之后，要对对象进行结构设计，结构包含了内部结构和外部结构，内部结构就是指对象内部的结构规划，外部结构更多的是处理对象与对象间的关系。结构型设计模式主要包括：外观模式、适配器模式、装饰器模式、代理模式、享元模式。</p> <h3 id="外观模式"><a href="#外观模式" class="header-anchor">#</a> 外观模式</h3> <p>外观模式就是把零散的接口组合到一起供外部调用的一种模式，类似于快餐店的套餐组合。</p> <h3 id="适配器模式"><a href="#适配器模式" class="header-anchor">#</a> 适配器模式</h3> <p>适配器模式就好比是转接头，将不适合的接口调整成适合的接口。</p> <div class="language-js extra-class"><pre class="language-js"><code> <span class="token comment">//适配器模式</span>
+   <span class="token comment">//把不合适的东西进行适配</span>
+
+ <span class="token comment">//假设要把A框架的改为jquery框架，可以对A框架的实现进行重写</span>
+<span class="token keyword">var</span> <span class="token constant">A</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">on</span><span class="token operator">:</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+ <span class="token comment">//重写on方法，实质上是去调用jquery的on方法</span>
+ <span class="token constant">A</span><span class="token punctuation">.</span><span class="token function-variable function">on</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">dom<span class="token punctuation">,</span>type<span class="token punctuation">,</span>fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   <span class="token keyword">return</span> <span class="token function">$</span><span class="token punctuation">(</span>dom<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span>dom<span class="token punctuation">,</span>type<span class="token punctuation">,</span>fn<span class="token punctuation">)</span>
+ <span class="token punctuation">}</span>
+ <span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="装饰器模式"><a href="#装饰器模式" class="header-anchor">#</a> 装饰器模式</h3> <p>装饰器模式就是一种不修改源码地扩展方法地思路。</p> <div class="language-js extra-class"><pre class="language-js"><code> <span class="token comment">//装饰器模式</span>
+   <span class="token comment">//不去修改源码的去扩张方法。</span>
+   <span class="token keyword">var</span> <span class="token constant">A</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+     <span class="token function-variable function">c</span><span class="token operator">:</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function">deco</span><span class="token punctuation">(</span><span class="token parameter">fn1<span class="token punctuation">,</span> fn2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">var</span> _fn1 <span class="token operator">=</span> fn1<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> _fn2 <span class="token operator">=</span> fn2<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    	<span class="token function">_fn1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    	<span class="token function">_fn2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token function">deco</span><span class="token punctuation">(</span><span class="token constant">A</span><span class="token punctuation">.</span>c<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token constant">A</span><span class="token punctuation">.</span>c <span class="token operator">=</span> a<span class="token punctuation">;</span>
+</code></pre></div><h3 id="享元模式"><a href="#享元模式" class="header-anchor">#</a> 享元模式</h3> <p>享元模式是一种优化程序性能的手段，通过共享公用数据来减少对象数量以达到优化程序的手段。享元模式适用于拥有大量类似对象并且对性能有要求的场景。dom中的事件委托就是享元模式的一种实际应用。</p> <h2 id="行为型设计模式"><a href="#行为型设计模式" class="header-anchor">#</a> 行为型设计模式</h2> <p>行为型设计模式主要是用来组织对象之间沟通的一种设计模式，主要包括：观察者模式、策略模式、状态模式、迭代器模式、解释器模式、命令模式。
+####观察者模式
+观察者模式主要用于模块之间的沟通，例如jq中的自定义事件、vuex状态管理。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">var</span> obs<span class="token operator">=</span><span class="token punctuation">{</span>
+    fallback<span class="token operator">:</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">on</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">type<span class="token punctuation">,</span>fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>fallback<span class="token punctuation">[</span>type<span class="token punctuation">]</span> <span class="token operator">=</span> fn<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">fire</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">type</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>fallback<span class="token punctuation">[</span>type<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">delete</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>fallback<span class="token punctuation">[</span>type<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+obs<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'mytest'</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+obs<span class="token punctuation">.</span><span class="token function">fire</span><span class="token punctuation">(</span><span class="token string">'mytest'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="策略模式"><a href="#策略模式" class="header-anchor">#</a> 策略模式</h3> <div class="language-js extra-class"><pre class="language-js"><code> <span class="token comment">//策略模式</span>
+通过策略模式，将需要传相同类型的参数的几个函数封装成一个对象，单纯的通过调用实现具体的功能。
+   <span class="token keyword">function</span> <span class="token function">calc</span><span class="token punctuation">(</span><span class="token parameter">type<span class="token punctuation">,</span>a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	   <span class="token keyword">var</span> a<span class="token operator">=</span><span class="token punctuation">{</span>
+	      <span class="token function-variable function">add</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	      	<span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span>
+	      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+	      <span class="token function-variable function">minus</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	      	<span class="token keyword">return</span> a<span class="token operator">-</span>b
+	      <span class="token punctuation">}</span>
+	   <span class="token punctuation">}</span>
+	   a<span class="token punctuation">[</span>type<span class="token punctuation">]</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+</code></pre></div><h3 id="状态模式"><a href="#状态模式" class="header-anchor">#</a> 状态模式</h3> <p>在策略模式的基础上加上一个状态管理。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//状态模式</span>
+<span class="token keyword">var</span> a<span class="token operator">=</span><span class="token punctuation">{</span>
+  statusArr<span class="token operator">:</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">on</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>statusArr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">fire</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>statusArr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>catorlist<span class="token punctuation">[</span>item<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  catorlist <span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">add</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">return</span> a<span class="token operator">+</span>b<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">minus</span> <span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span>b</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">return</span> a<span class="token operator">-</span>b<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>         	
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+a<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'add'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+a<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'minus'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+a<span class="token punctuation">.</span><span class="token function">fire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="命令模式"><a href="#命令模式" class="header-anchor">#</a> 命令模式</h3> <p>命令模式是一种指导思想，将具体的实现和需求解耦。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//命令模式</span>
+<span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span>
+                  document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">&quot;dom1&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                  <span class="token punctuation">{</span>title<span class="token operator">:</span><span class="token string">'title'</span><span class="token punctuation">,</span>pic<span class="token operator">:</span><span class="token string">&quot;url1&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+                  <span class="token punctuation">{</span>title<span class="token operator">:</span><span class="token string">'title2'</span><span class="token punctuation">,</span>pic<span class="token operator">:</span><span class="token string">&quot;url2&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+                  <span class="token punctuation">{</span>title<span class="token operator">:</span><span class="token string">'title3'</span><span class="token punctuation">,</span>pic<span class="token operator">:</span><span class="token string">&quot;url4&quot;</span><span class="token punctuation">}</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">command</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> _html<span class="token operator">=</span><span class="token string">''</span><span class="token punctuation">;</span>
+  <span class="token keyword">function</span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    arr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      _html<span class="token operator">+=</span><span class="token string">&quot;&lt;div&gt;&lt;img src='&quot;</span><span class="token operator">+</span>item<span class="token punctuation">.</span>pic<span class="token operator">+</span><span class="token string">&quot;'&gt;&lt;/img&gt;&lt;/div&gt;&quot;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token parameter">content</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    content<span class="token punctuation">.</span>innerHTML<span class="token operator">=</span>_html<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">function</span> <span class="token function">_excute</span><span class="token punctuation">(</span><span class="token parameter">command</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">create</span><span class="token punctuation">(</span>command<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">display</span><span class="token punctuation">(</span>command<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    excute<span class="token operator">:</span>_excute<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token function">command</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">excute</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="迭代器模式"><a href="#迭代器模式" class="header-anchor">#</a> 迭代器模式</h3> <p>迭代器模式就是一系列的数据处理。</p> <div class="language-js extra-class"><pre class="language-js"><code> <span class="token comment">//迭代器模式</span>
+  <span class="token comment">//把一系列数据的处理先写好</span>
+<span class="token keyword">function</span> <span class="token function">calc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span>
+calc<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">equal</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span>num</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">var</span> istrue <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+  arr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">if</span><span class="token punctuation">(</span>item <span class="token operator">==</span> num<span class="token punctuation">)</span><span class="token punctuation">{</span>
+       istrue <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> istrue<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="解释器模式"><a href="#解释器模式" class="header-anchor">#</a> 解释器模式</h3> <p>解释器模式就相当于模版引擎的概念。</p> <h2 id="技巧性设计模式"><a href="#技巧性设计模式" class="header-anchor">#</a> 技巧性设计模式</h2> <p>技巧性设计模式包括：链模式、委托模式、节流模式、惰性模式、等待模式。许多技巧型模式都有对应的实例。</p> <h3 id="链模式"><a href="#链模式" class="header-anchor">#</a> 链模式</h3> <p>jq链式调用。
+####委托模式
+js的事件委托。
+####节流模式
+防抖截流。
+####惰性模式
+目的是减少判断。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//惰性模式</span>
+  <span class="token comment">//b的值一开始制定，就不会变</span>
+  <span class="token keyword">var</span> b <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span>b <span class="token operator">===</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	   <span class="token function-variable function">a</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+  	   <span class="token function-variable function">a</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  	<span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="等待者模式"><a href="#等待者模式" class="header-anchor">#</a> 等待者模式</h3> <p>等待者模式就类似于es2017中的async await的概念，等待上一个步骤执行完了，再执行下一个操作。</p> <p>以上就是设计模式在js中的应用的相关整理，先放这里，以后有实际应用的时候翻看。</p></div> <!----> <hr> <!----></div> <div class="sticker vuepress-toc"><div class="vuepress-toc-item vuepress-toc-h2 active"><a href="#创建型设计模式" title="创建型设计模式">创建型设计模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#工厂模式" title="工厂模式">工厂模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#建造者模式" title="建造者模式">建造者模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#原型模式" title="原型模式">原型模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#单例模式" title="单例模式">单例模式</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#结构型设计模式" title="结构型设计模式">结构型设计模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#外观模式" title="外观模式">外观模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#适配器模式" title="适配器模式">适配器模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#装饰器模式" title="装饰器模式">装饰器模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#享元模式" title="享元模式">享元模式</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#行为型设计模式" title="行为型设计模式">行为型设计模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#策略模式" title="策略模式">策略模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#状态模式" title="状态模式">状态模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#命令模式" title="命令模式">命令模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#迭代器模式" title="迭代器模式">迭代器模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#解释器模式" title="解释器模式">解释器模式</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#技巧性设计模式" title="技巧性设计模式">技巧性设计模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#链模式" title="链模式">链模式</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#等待者模式" title="等待者模式">等待者模式</a></div></div></div></div> <footer class="footer" data-v-97b6647a><div class="footer-left-wrap" data-v-97b6647a><ul class="contact" data-v-97b6647a></ul></div> <div class="footer-right-wrap" data-v-97b6647a><ul class="copyright" data-v-97b6647a><li class="copyright-item" data-v-97b6647a><a href="/myblog/2019/08/07/base/.html" class="nav-link" data-v-97b6647a>MIT Licensed | Copyright © 2020 sirius_wh</a></li></ul></div></footer></div><div class="global-ui"></div></div>
+    <script src="/myblog/assets/js/app.10632338.js" defer></script><script src="/myblog/assets/js/4.405058a6.js" defer></script><script src="/myblog/assets/js/5.026990a3.js" defer></script><script src="/myblog/assets/js/17.e6979acc.js" defer></script>
+  </body>
+</html>
